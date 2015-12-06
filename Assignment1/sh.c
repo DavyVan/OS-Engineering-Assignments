@@ -134,13 +134,23 @@ main(void)
       // Clumsy but will have to do for now.
       // Chdir has no effect on the parent if run in the child.
       buf[strlen(buf)-1] = 0;  // chop \n
+      //Support for ;
+      strtok(buf, ";");
+      //End support for ;
       if(chdir(buf+3) < 0)
         fprintf(stderr, "cannot cd %s\n", buf+3);
       continue;
     }
-    if(fork1() == 0)
-      runcmd(parsecmd(buf));
-    wait(&r);
+
+    char *t = strtok(buf, ";");
+    while(t != NULL)
+    {
+      if(fork1() == 0)
+        runcmd(parsecmd(t));
+      wait();
+      t = strtok(NULL, ";");
+    }
+    
   }
   exit(0);
 }
