@@ -1,0 +1,3 @@
+0x7bfc	0x00007c4d		return pointer for bootmain to return
+...		0x00000000
+0x7bcc	0x00007db7		return pointer for kernel to return
